@@ -3,6 +3,7 @@ import { Outlet, Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../store/slices/authSlice';
 import { usetheme } from '../../context/ThemeContext';
+import './MainLayout.css';
 import {
   HomeIcon,
   UsersIcon,
@@ -111,7 +112,7 @@ const MainLayout = () => {
       <div
         className={`fixed inset-y-0 left-0 z-50 w-64 transform bg-gradient-to-b from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 shadow-xl border-r border-gray-200/50 dark:border-gray-700/50 backdrop-blur-sm transition-all duration-300 ease-in-out
           ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
-          lg:translate-x-0 lg:static lg:inset-0`}
+          lg:translate-x-0 lg:static lg:inset-0 bbb`}
       >
         <div className="flex items-center justify-between h-16 px-4 border-b border-gray-200/50 dark:border-gray-700/50">
           <div className="flex items-center space-x-3">
@@ -263,9 +264,9 @@ const MainLayout = () => {
       </div>
 
       {/* Main Content Area */}
-      <div className="lg:pl-64">
+      <div className="lg:pl-64 relative teste ">
         {/* Header - Fixo no topo */}
-        <header className="fixed top-0 right-0 left-0 z-40 h-14 flex items-center justify-between px-4 bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border-b border-gray-200/30 dark:border-gray-700/30 shadow-sm">
+        <header className="header-top-menu fixed top-0 right-0 left-0 z-40 h-14 flex items-center justify-between px-4 bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border-b border-gray-200/30 dark:border-gray-700/30 shadow-sm">
           <div className="flex items-center space-x-3">
             <button
               onClick={() => setSidebarOpen(true)}

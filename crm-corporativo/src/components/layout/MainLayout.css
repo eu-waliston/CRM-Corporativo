@@ -1,0 +1,17 @@
+@media (min-width: 1024px) {
+  /* lg breakpoint do Tailwind */
+  .teste {
+    margin-top: -650px;
+  }
+
+  .bbb {
+    position: relative !important;
+    top: 57px !important;
+    z-index: 1 !important;
+  }
+
+  .header-top-menu {
+    position: fixed !important;
+    z-index: 9999999999999999999 !important;
+  }
+}
