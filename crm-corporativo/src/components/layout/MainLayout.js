@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Outlet, Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../store/slices/authSlice';
-import { usetheme } from '../../context/ThemeContext';
+// import { usetheme } from '../../context/ThemeContext';
 
 import NotificationsDropdown from '../../pages/NotificationsDropdown';
 
@@ -12,10 +12,10 @@ import {
   UsersIcon,
   BriefcaseIcon,
   CogIcon,
-  BellIcon,
+  // BellIcon,
   ChevronDownIcon,
-  MoonIcon,
-  SunIcon,
+  // MoonIcon,
+  // SunIcon,
   ArrowRightOnRectangleIcon,
   UserCircleIcon,
   ChartPieIcon,
@@ -24,7 +24,7 @@ import {
   CalendarIcon,
   SparklesIcon,
 } from '@heroicons/react/24/outline';
-import { useTheme } from '@mui/material';
+// import { useTheme } from '@mui/material';
 
 const MainLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -33,7 +33,7 @@ const MainLayout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
-  const { isDark, toggleTheme } = useTheme();
+  // const { isDark, toggleTheme } = useTheme();
 
   const handleLogout = () => {
     dispatch(logout());
