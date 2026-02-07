@@ -1,12 +1,14 @@
 import axios from 'axios';
 import mockApi from './mock';
+const useMock = process.env.REACT_APP_USE_MOCK === 'true';
 
 const api = axios.create({
-  baseURL:
-    process.env.REACT_APP_API_URL ??
-    (process.env.NODE_ENV === 'development'
-      ? 'http://localhost:5000/api'
-      : undefined),
+  baseURL: useMock
+    ? null // não usa axios
+    : process.env.REACT_APP_API_URL ||
+      (process.env.NODE_ENV === 'development'
+        ? 'http://localhost:5000/api'
+        : undefined),
 });
 
 // Função para verificar se estamos em desenvolvimento
