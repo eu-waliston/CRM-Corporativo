@@ -34,8 +34,11 @@ const AppRoutes = () => {
       }>
         <Route index element={<Dashboard />} />
         <Route path="leads" element={<Leads />} />
+         {/* TODO ERRO NA ROTA DE LEADS [ NO COMPONENTE ] */}
         <Route path="contacts" element={<Contacts />} />
+        {/* TODO ERRO NA ROTA DE CONTATOS [ NO COMPONENTE ] */}
         <Route path="deals" element={<Deals />} />
+        {/* TODO ERRO NA ROTA DE NEGOCIOS [ NO COMPONENTE ] */}
         <Route path="reports" element={<Reports />} />
         <Route path="settings" element={<Settings />} />
         <Route path="profile" element={<Profile />} />
