@@ -110,12 +110,31 @@ npm install
 # 3. Configure o ambiente
 cp .env.example .env
 
+# subi o env porem sem informações sensiveis, por ser um cenário de teste !!!!
+
 # 4. Inicie o servidor de desenvolvimento
 npm start
 
 # 5. Para produção
 npm run build
+
 ```
+
+## Contas para teste do CRM
+
+```
+    email: 'admin@crm.com',
+    password: 'admin123',
+
+
+    email: 'vendas@crm.com',
+    password: 'vendas123',
+
+    email: 'teste@crm.com',
+    password: 'teste123',
+
+```
+
 
 ## Recursos Implementados:
   - ✅ Arquitetura Corporativa Completa
@@ -143,3 +162,4 @@ npm run build
   - ✅ Code Quality (ESLint + Prettier + Husky)
 
   - ✅ Deploy Pronto
+
