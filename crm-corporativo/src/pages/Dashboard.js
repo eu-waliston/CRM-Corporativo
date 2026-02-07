@@ -14,6 +14,7 @@ import {
 import { Line, Bar, Pie } from 'react-chartjs-2';
 
 import * as Icons from '@heroicons/react/24/outline';
+// import api from '../api';
 
 ChartJS.register(
   CategoryScale,
@@ -102,6 +103,7 @@ const Dashboard = () => {
       },
     ],
   };
+
 
   return (
     <div className="space-y-6">

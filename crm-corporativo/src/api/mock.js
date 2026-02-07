@@ -95,6 +95,7 @@ const mockLeads = [
     notes: 'Negociação em andamento.',
     createdAt: '2023-12-28T11:10:00Z',
   },
+
 ];
 
 const mockContacts = [
@@ -130,6 +131,28 @@ const mockContacts = [
     type: 'partner',
     notes: 'Parceiro estratégico',
     createdAt: '2023-12-10T09:15:00Z',
+  },
+  {
+    id: 4,
+    name: 'Mariana Lima',
+    email: 'mariana@inovacao.com',
+    phone: '(41) 96666-6664',
+    company: 'Inovação Digital',
+    jobTitle: 'Head of Sales',
+    type: 'client',
+    notes: 'Cliente premium',
+    createdAt: '2023-12-15T16:45:00Z',
+  },
+  {
+    id: 5,
+    name: 'Ricardo Almeida',
+    email: 'ricardo@global.com',
+    phone: '(51) 95555-5555',
+    company: 'Global Solutions',
+    jobTitle: 'CTO',
+    type: 'supplier',
+    notes: 'Fornecedor de serviços',
+    createdAt: '2023-12-20T11:10:00Z',
   },
 ];
 
@@ -170,6 +193,30 @@ const mockDeals = [
     tags: ['ecommerce', 'platform'],
     createdAt: '2024-01-02T09:15:00Z',
   },
+  {
+    id: 4,
+    title: 'Consultoria em Transformação Digital',
+    contactName: 'Mariana Lima',
+    company: 'Inovação Digital',
+    value: 85000,
+    stage: 'negotiation',
+    closeDate: '2024-02-28',
+    probability: '75%',
+    tags: ['consultoria', 'digital'],
+    createdAt: '2024-01-08T14:30:00Z',
+  },
+  {
+    id: 5,
+    title: 'Sistema de Business Intelligence',
+    contactName: 'Ricardo Almeida',
+    company: 'Global Solutions',
+    value: 95000,
+    stage: 'closed_won',
+    closeDate: '2024-01-25',
+    probability: '100%',
+    tags: ['bi', 'analytics'],
+    createdAt: '2024-01-03T09:45:00Z',
+  },
 ];
 
 // Simulação de delay de API
@@ -178,7 +225,7 @@ const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 export const mockApi = {
   // Autenticação
   login: async (credentials) => {
-    await delay(500); // Simula delay de rede
+    await delay(500);
 
     const user = mockUsers.find(
       u => u.email === credentials.email && u.password === credentials.password
@@ -188,7 +235,6 @@ export const mockApi = {
       throw new Error('Email ou senha inválidos');
     }
 
-    // Remove a senha do objeto de retorno
     const { password, ...userWithoutPassword } = user;
 
     return {
@@ -197,13 +243,12 @@ export const mockApi = {
     };
   },
 
-  // Leads
+  // ========== LEADS ==========
   getLeads: async (params = {}) => {
     await delay(300);
 
     let filteredLeads = [...mockLeads];
 
-    // Aplica filtros
     if (params.status) {
       filteredLeads = filteredLeads.filter(lead => lead.status === params.status);
     }
@@ -222,12 +267,7 @@ export const mockApi = {
       );
     }
 
-    return {
-      data: filteredLeads,
-      total: filteredLeads.length,
-      page: 1,
-      limit: 10,
-    };
+    return filteredLeads;
   },
 
   createLead: async (leadData) => {
@@ -271,7 +311,7 @@ export const mockApi = {
     return { success: true };
   },
 
-  // Contacts
+  // ========== CONTACTS ==========
   getContacts: async (params = {}) => {
     await delay(300);
 
@@ -279,6 +319,12 @@ export const mockApi = {
 
     if (params.type) {
       filteredContacts = filteredContacts.filter(contact => contact.type === params.type);
+    }
+
+    if (params.company) {
+      filteredContacts = filteredContacts.filter(contact =>
+        contact.company.toLowerCase().includes(params.company.toLowerCase())
+      );
     }
 
     if (params.search) {
@@ -291,15 +337,51 @@ export const mockApi = {
       );
     }
 
-    return {
-      data: filteredContacts,
-      total: filteredContacts.length,
-      page: 1,
-      limit: 10,
-    };
+    return filteredContacts;
   },
 
-  // Deals
+  createContact: async (contactData) => {
+    await delay(300);
+
+    const newContact = {
+      id: mockContacts.length + 1,
+      ...contactData,
+      createdAt: new Date().toISOString(),
+    };
+
+    mockContacts.unshift(newContact);
+    return newContact;
+  },
+
+  updateContact: async (id, contactData) => {
+    await delay(300);
+
+    const index = mockContacts.findIndex(contact => contact.id === parseInt(id));
+    if (index === -1) {
+      throw new Error('Contato não encontrado');
+    }
+
+    mockContacts[index] = {
+      ...mockContacts[index],
+      ...contactData,
+    };
+
+    return mockContacts[index];
+  },
+
+  deleteContact: async (id) => {
+    await delay(300);
+
+    const index = mockContacts.findIndex(contact => contact.id === parseInt(id));
+    if (index === -1) {
+      throw new Error('Contato não encontrado');
+    }
+
+    mockContacts.splice(index, 1);
+    return { success: true };
+  },
+
+  // ========== DEALS ==========
   getDeals: async (params = {}) => {
     await delay(300);
 
@@ -319,12 +401,36 @@ export const mockApi = {
       );
     }
 
-    return {
-      data: filteredDeals,
-      total: filteredDeals.length,
-      page: 1,
-      limit: 10,
+    return filteredDeals;
+  },
+
+  createDeal: async (dealData) => {
+    await delay(300);
+
+    const newDeal = {
+      id: mockDeals.length + 1,
+      ...dealData,
+      createdAt: new Date().toISOString(),
     };
+
+    mockDeals.unshift(newDeal);
+    return newDeal;
+  },
+
+  updateDeal: async (id, dealData) => {
+    await delay(300);
+
+    const index = mockDeals.findIndex(deal => deal.id === parseInt(id));
+    if (index === -1) {
+      throw new Error('Negócio não encontrado');
+    }
+
+    mockDeals[index] = {
+      ...mockDeals[index],
+      ...dealData,
+    };
+
+    return mockDeals[index];
   },
 
   updateDealStage: async (id, stage) => {
@@ -337,6 +443,113 @@ export const mockApi = {
 
     mockDeals[index].stage = stage;
     return mockDeals[index];
+  },
+
+  deleteDeal: async (id) => {
+    await delay(300);
+
+    const index = mockDeals.findIndex(deal => deal.id === parseInt(id));
+    if (index === -1) {
+      throw new Error('Negócio não encontrado');
+    }
+
+    mockDeals.splice(index, 1);
+    return { success: true };
+  },
+
+  // ========== DASHBOARD ==========
+  getDashboardStats: async () => {
+    await delay(300);
+
+    const totalLeads = mockLeads.length;
+    const totalContacts = mockContacts.length;
+    const totalDeals = mockDeals.length;
+
+    const totalRevenue = mockDeals
+      .filter(deal => deal.stage === 'closed_won')
+      .reduce((sum, deal) => sum + deal.value, 0);
+
+    const conversionRate = totalDeals > 0
+      ? Math.round((mockDeals.filter(d => d.stage === 'closed_won').length / totalLeads) * 100)
+      : 0;
+
+    return {
+      totalLeads,
+      totalContacts,
+      totalDeals,
+      totalRevenue,
+      conversionRate,
+      recentLeads: mockLeads.slice(0, 5),
+      recentDeals: mockDeals.slice(0, 5),
+    };
+  },
+
+  // ========== REPORTS ==========
+    // ========== REPORTS ==========
+  getReports: async (params = {}) => {
+    await delay(300);
+
+    // Remova as variáveis não utilizadas ou use-as
+    const { startDate, endDate } = params;
+
+    // Simula dados de relatório
+    const monthlyRevenue = [
+      { month: 'Jan', revenue: 65000, target: 60000 },
+      { month: 'Fev', revenue: 79000, target: 70000 },
+      { month: 'Mar', revenue: 82000, target: 80000 },
+      { month: 'Abr', revenue: 91000, target: 90000 },
+      { month: 'Mai', revenue: 105000, target: 100000 },
+      { month: 'Jun', revenue: 120000, target: 110000 },
+      { month: 'Jul', revenue: 98000, target: 120000 },
+    ];
+
+    // Se quiser usar startDate e endDate para filtrar (exemplo):
+    // const filteredRevenue = monthlyRevenue.filter(item => {
+    //   const monthYear = item.month + ' 2024'; // simplificado
+    //   // Lógica de filtro baseada nas datas
+    //   return true;
+    // });
+
+    const conversionBySource = [
+      { source: 'Website', conversion: 3.2, leads: 156 },
+      { source: 'Redes Sociais', conversion: 2.1, leads: 89 },
+      { source: 'Email', conversion: 4.5, leads: 123 },
+      { source: 'Indicação', conversion: 6.8, leads: 67 },
+      { source: 'Eventos', conversion: 5.2, leads: 45 },
+    ];
+
+    const teamPerformance = [
+      { name: 'João S.', sales: 125000, target: 120000 },
+      { name: 'Maria A.', sales: 98000, target: 100000 },
+      { name: 'Pedro C.', sales: 156000, target: 150000 },
+      { name: 'Ana L.', sales: 112000, target: 110000 },
+      { name: 'Carlos M.', sales: 89000, target: 90000 },
+    ];
+
+    const topProducts = [
+      { product: 'Produto A', sales: 35, revenue: 245000 },
+      { product: 'Produto B', sales: 25, revenue: 175000 },
+      { product: 'Produto C', sales: 20, revenue: 140000 },
+      { product: 'Produto D', sales: 12, revenue: 84000 },
+      { product: 'Produto E', sales: 8, revenue: 56000 },
+    ];
+
+    return {
+      monthlyRevenue,
+      conversionBySource,
+      teamPerformance,
+      topProducts,
+      kpis: {
+        totalRevenue: 628500,
+        newCustomers: 245,
+        cac: 450,
+        ltv: 2800,
+        churnRate: 2.4,
+        satisfaction: 4.7,
+      },
+      // Adicione um log para mostrar que os parâmetros estão sendo recebidos
+      _params: { startDate, endDate }, // Adicione isto para usar as variáveis
+    };
   },
 };
 

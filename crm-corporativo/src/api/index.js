@@ -12,9 +12,6 @@ const api = axios.create({
         : undefined),
 });
 
-// Função para verificar se estamos em desenvolvimento
-const isDevelopment = process.env.NODE_ENV === 'development';
-
 // Request interceptor
 api.interceptors.request.use(
   (config) => {
@@ -42,22 +39,41 @@ api.interceptors.response.use(
   }
 );
 
-// Wrapper da API que usa mock em desenvolvimento
+
+const isDevelopment = process.env.NODE_ENV === 'development';
+
+// API wrapper que usa mock em desenvolvimento
 const apiWrapper = {
-  // Autenticação
+  // ========== POST ==========
   post: async (url, data) => {
     if (isDevelopment) {
+      console.log(`Mock POST ${url}:`, data);
+
       // Rotas específicas do mock
       if (url === '/auth/login') {
         return { data: await mockApi.login(data) };
       }
-      // Para outras rotas POST, simula com axios
+      if (url === '/leads') {
+        return { data: await mockApi.createLead(data) };
+      }
+      if (url === '/contacts') {
+        return { data: await mockApi.createContact(data) };
+      }
+      if (url === '/deals') {
+        return { data: await mockApi.createDeal(data) };
+      }
     }
-    return api.post(url, data);
+
+    // Para produção ou rotas não mockadas
+    console.warn(`POST ${url} não implementado no mock`);
+    return Promise.reject(new Error('Endpoint não implementado'));
   },
 
+  // ========== GET ==========
   get: async (url, config = {}) => {
     if (isDevelopment) {
+      console.log(`Mock GET ${url}:`, config.params);
+
       // Rotas específicas do mock
       if (url === '/leads') {
         return { data: await mockApi.getLeads(config.params) };
@@ -68,45 +84,84 @@ const apiWrapper = {
       if (url === '/deals') {
         return { data: await mockApi.getDeals(config.params) };
       }
-      // Para outras rotas GET, simula com axios
+      if (url === '/dashboard/stats') {
+        return { data: await mockApi.getDashboardStats() };
+      }
+      if (url === '/reports') {
+        return { data: await mockApi.getReports(config.params) };
+      }
     }
-    return api.get(url, config);
+
+    // Para produção ou rotas não mockadas
+    console.warn(`GET ${url} não implementado no mock`);
+    return Promise.reject(new Error('Endpoint não implementado'));
   },
 
+  // ========== PUT ==========
   put: async (url, data) => {
     if (isDevelopment) {
+      console.log(`Mock PUT ${url}:`, data);
+
       // Rotas específicas do mock
       if (url.startsWith('/leads/')) {
         const id = url.split('/')[2];
         return { data: await mockApi.updateLead(id, data) };
       }
-      // Para outras rotas PUT, simula com axios
+      if (url.startsWith('/contacts/')) {
+        const id = url.split('/')[2];
+        return { data: await mockApi.updateContact(id, data) };
+      }
+      if (url.startsWith('/deals/')) {
+        const id = url.split('/')[2];
+        return { data: await mockApi.updateDeal(id, data) };
+      }
     }
-    return api.put(url, data);
+
+    // Para produção ou rotas não mockadas
+    console.warn(`PUT ${url} não implementado no mock`);
+    return Promise.reject(new Error('Endpoint não implementado'));
   },
 
+  // ========== DELETE ==========
   delete: async (url) => {
     if (isDevelopment) {
+      console.log(`Mock DELETE ${url}`);
+
       // Rotas específicas do mock
       if (url.startsWith('/leads/')) {
         const id = url.split('/')[2];
         return { data: await mockApi.deleteLead(id) };
       }
-      // Para outras rotas DELETE, simula com axios
+      if (url.startsWith('/contacts/')) {
+        const id = url.split('/')[2];
+        return { data: await mockApi.deleteContact(id) };
+      }
+      if (url.startsWith('/deals/')) {
+        const id = url.split('/')[2];
+        return { data: await mockApi.deleteDeal(id) };
+      }
     }
-    return api.delete(url);
+
+    // Para produção ou rotas não mockadas
+    console.warn(`DELETE ${url} não implementado no mock`);
+    return Promise.reject(new Error('Endpoint não implementado'));
   },
 
+  // ========== PATCH ==========
   patch: async (url, data) => {
     if (isDevelopment) {
+      console.log(`Mock PATCH ${url}:`, data);
+
       // Rotas específicas do mock
       if (url.includes('/stage')) {
         const id = url.split('/')[2];
         return { data: await mockApi.updateDealStage(id, data.stage) };
       }
-      // Para outras rotas PATCH, simula com axios
     }
-    return api.patch(url, data);
+
+    // Para produção ou rotas não mockadas
+    console.warn(`PATCH ${url} não implementado no mock`);
+    return Promise.reject(new Error('Endpoint não implementado'));
   },
 };
 

@@ -29,6 +29,10 @@ const Leads = () => {
       api.get('/leads', { params: filters }).then((res) => res.data),
   });
 
+  // extrai os leads do objeto de resposta
+  // const leads = leads?.data || leadsData || [];
+
+
   const deleteMutation = useMutation({
     mutationFn: (id) => api.delete(`/leads/${id}`),
     onSuccess: () => {
