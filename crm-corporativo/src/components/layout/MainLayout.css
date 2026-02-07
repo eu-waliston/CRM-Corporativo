@@ -14,4 +14,9 @@
     position: fixed !important;
     z-index: 9999999999999999999 !important;
   }
+
+  footer {
+    position: relative;
+    top: 320px !important;
+  }
 }
