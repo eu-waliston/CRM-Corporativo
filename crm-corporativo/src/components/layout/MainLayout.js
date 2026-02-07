@@ -420,19 +420,21 @@ const MainLayout = () => {
               </div>
               <div className="flex items-center space-x-4">
                 <a
-                  href="#"
+                  href="/termos"
                   className="text-xs text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
                 >
                   Termos
                 </a>
+
                 <a
-                  href="#"
+                  href="/privacidade"
                   className="text-xs text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
                 >
                   Privacidade
                 </a>
+
                 <a
-                  href="#"
+                  href="/suporte"
                   className="text-xs text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
                 >
                   Suporte
