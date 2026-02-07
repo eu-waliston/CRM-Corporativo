@@ -42,6 +42,7 @@ const NotificationsDropdown = () => {
   }, []);
 
   // Ícones por tipo de notificação
+  // eslint-disable-next-line
   const iconMap = {
     success: CheckCircleIcon,
     warning: ClockIcon,

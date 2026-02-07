@@ -8,7 +8,7 @@ import {
   DocumentArrowUpIcon,
   FolderIcon,
   EyeIcon,
-  DownloadIcon,
+  // DownloadIcon,
   TrashIcon,
   ShareIcon,
   PencilIcon,
@@ -16,7 +16,7 @@ import {
   ClockIcon,
   XCircleIcon,
   PlusIcon,
-  SearchIcon,
+  // SearchIcon,
   FunnelIcon,
 } from '@heroicons/react/24/outline';
 import Button from '../components/common/Button';

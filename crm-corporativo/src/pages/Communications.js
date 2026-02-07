@@ -7,12 +7,12 @@ import {
   PhoneIcon,
   CalendarIcon,
   UserIcon,
-  CheckCircleIcon,
+  // CheckCircleIcon,
   ClockIcon,
-  XCircleIcon,
+  // XCircleIcon,
   PlusIcon,
-  FilterIcon,
-  SearchIcon,
+  // FilterIcon,
+  // SearchIcon,
 } from '@heroicons/react/24/outline';
 
 import * as Icons from '@heroicons/react/24/outline';
@@ -26,7 +26,7 @@ const Communications = () => {
   const [selectedType, setSelectedType] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
 
-  const { data: communications, isLoading } = useQuery({
+  const { data: isLoading } = useQuery({
     queryKey: ['communications', activeTab, selectedType],
     queryFn: () => api.get('/communications').then((res) => res.data),
   });

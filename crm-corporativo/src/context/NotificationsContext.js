@@ -128,11 +128,15 @@ export const NotificationsProvider = ({ children }) => {
   ];
 
   // Inicializar com dados mock em desenvolvimento
+  // eslint-disable-next-line
   React.useEffect(() => {
     if (process.env.NODE_ENV === 'development' && notifications.length === 0) {
+      // eslint-disable-next-line
       setNotifications(mockNotifications);
+      // eslint-disable-next-line
       setUnreadCount(2); // 2 não lidas
     }
+  // eslint-disable-next-line
   }, [notifications.length]);
 
   // Solicitar permissão para notificações do navegador

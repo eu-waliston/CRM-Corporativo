@@ -7,7 +7,6 @@ import {
   CurrencyDollarIcon,
   UserIcon,
   CalendarIcon,
-  ArrowRightIcon,
   PencilIcon,
   TrashIcon,
   EyeIcon,

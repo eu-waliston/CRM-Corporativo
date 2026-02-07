@@ -17,7 +17,6 @@ import {
   TrashIcon,
   FunnelIcon,
   ViewColumnsIcon,
-  ViewListIcon,
 } from '@heroicons/react/24/outline';
 import Button from '../components/common/Button';
 
@@ -25,7 +24,8 @@ const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [viewMode, setViewMode] = useState('month'); // 'month', 'week', 'day', 'agenda'
   const [selectedEvent, setSelectedEvent] = useState(null);
-  const [showEventModal, setShowEventModal] = useState(false);
+  const [ setShowEventModal] = useState(false);
+  // const [showEventModal, setShowEventModal] = useState(false); // TODO - criar novo evento
   const [showSidebar, setShowSidebar] = useState(true);
 
   // Dias da semana
@@ -810,6 +810,7 @@ const Calendar = () => {
           >
             {showSidebar ? 'Ocultar Filtros' : 'Mostrar Filtros'}
           </Button>
+
           <Button
             startIcon={<PlusIcon className="w-4 h-4" />}
             onClick={() => setShowEventModal(true)}
