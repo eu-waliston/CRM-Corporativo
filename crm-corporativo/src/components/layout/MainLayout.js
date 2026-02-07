@@ -3,6 +3,9 @@ import { Outlet, Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../store/slices/authSlice';
 import { usetheme } from '../../context/ThemeContext';
+
+import NotificationsDropdown from '../../pages/NotificationsDropdown';
+
 import './MainLayout.css';
 import {
   HomeIcon,
@@ -322,8 +325,12 @@ const MainLayout = () => {
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
-              className="p-1.5 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors relative group"
-              title={isDark ? 'Modo Claro' : 'Modo Escuro'}
+              className="p-1.5 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
+              title={
+                isDark
+                  ? 'Alternar para Modo Claro'
+                  : 'Alternar para Modo Escuro'
+              }
             >
               {isDark ? (
                 <SunIcon className="w-4 h-4" />
@@ -333,12 +340,7 @@ const MainLayout = () => {
             </button>
 
             {/* Notifications */}
-            <div className="relative">
-              <button className="p-1.5 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors relative">
-                <BellIcon className="w-4 h-4" />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 border border-white dark:border-gray-800 rounded-full animate-pulse"></span>
-              </button>
-            </div>
+            <NotificationsDropdown />
 
             {/* User Menu */}
             <div className="relative">

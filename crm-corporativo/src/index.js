@@ -10,7 +10,7 @@ import './styles/globals.css';
 import { ThemeProvider } from './context/ThemeContext';
 import { Toaster } from 'react-hot-toast';
 import './index.css';
-
+import { NotificationsProvider } from './context/NotificationsContext';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -23,31 +23,34 @@ const queryClient = new QueryClient({
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+// Envolva o App com NotificationsProvider:
 root.render(
   <React.StrictMode>
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <ThemeProvider>
-            <App />
-            <Toaster
-              position="top-right"
-              toastOptions={{
-                duration: 4000,
-                style: {
-                  background: '#363636',
-                  color: '#fff',
-                },
-                success: {
-                  duration: 3000,
-                  theme: {
-                    primary: 'green',
-                    secondary: 'black',
+            <NotificationsProvider>
+              <App />
+              <Toaster
+                position="top-right"
+                toastOptions={{
+                  duration: 4000,
+                  style: {
+                    background: '#363636',
+                    color: '#fff',
                   },
-                },
-              }}
-            />
-            <ReactQueryDevtools initialIsOpen={false} />
+                  success: {
+                    duration: 3000,
+                    theme: {
+                      primary: 'green',
+                      secondary: 'black',
+                    },
+                  },
+                }}
+              />
+              <ReactQueryDevtools initialIsOpen={false} />
+            </NotificationsProvider>
           </ThemeProvider>
         </BrowserRouter>
       </QueryClientProvider>
