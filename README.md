@@ -126,7 +126,6 @@ npm run build
     email: 'admin@crm.com',
     password: 'admin123',
 
-
     email: 'vendas@crm.com',
     password: 'vendas123',
 
