@@ -1,5 +1,6 @@
 import axios from 'axios';
 import mockApi from './mock';
+
 const useMock = process.env.REACT_APP_USE_MOCK === 'true';
 
 const api = axios.create({

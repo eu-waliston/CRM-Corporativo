@@ -1,61 +1,33 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../api';
 import { mockApi } from '../../api/mock'
+const useMock = process.env.REACT_APP_USE_MOCK === 'true';
 
-// export const login = createAsyncThunk(
-//     'auth/login',
-//     async ({ email, password }, { rejectWithValue }) => {
-//         try {
-//             console.log('🚀 LOGIN THUNK START', email, password);
-//             console.log('🌍 NODE_ENV:', process.env.NODE_ENV);
-//             // Em desenvolvimento, usa o mock
-//             if (process.env.NODE_ENV === 'true') {
-//                 const response = await mockApi.login({ email, password });
-//                 const { token, user } = response;
-//                 localStorage.setItem('token', token);
-//                 localStorage.setItem('user', JSON.stringify(user));
-//                 return { token, user };
-//             } else {
-//                 // Em produção, usa a API real
-//                 const response = await api.post('/auth/login', { email, password });
-//                 const { token, user } = response.data;
-//                 localStorage.setItem('token', token);
-//                 localStorage.setItem('user', JSON.stringify(user));
-//                 return { token, user };
-//             }
-//         } catch (error) {
-//             return rejectWithValue(error.message || error.response?.data?.message || 'Login failed');
-//         }
-//     }
-// );
 
 export const login = createAsyncThunk(
   'auth/login',
   async ({ email, password }, { rejectWithValue }) => {
     try {
-      console.log('🚀 LOGIN THUNK START', email, password);
-      console.log('🌍 NODE_ENV:', process.env.NODE_ENV);
+      let data;
 
-      if (process.env.NODE_ENV === 'development') {
-        const response = await mockApi.login({ email, password });
-        console.log('✅ MOCK RESPONSE:', response);
-
-        const { token, user } = response;
-        localStorage.setItem('token', token);
-        localStorage.setItem('user', JSON.stringify(user));
-        return { token, user };
+      if (useMock) {
+        data = await mockApi.login({ email, password });
+      } else {
+        const response = await api.post('/auth/login', { email, password });
+        data = response.data;
       }
 
-      const response = await api.post('/auth/login', { email, password });
-      const { token, user } = response.data;
+      const { token, user } = data;
+
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));
-      return { token, user };
 
+      return { token, user };
     } catch (error) {
-      console.error('❌ LOGIN ERROR:', error);
       return rejectWithValue(
-        error.message || error.response?.data?.message || 'Login failed'
+        error.response?.data?.message ||
+        error.message ||
+        'Login failed'
       );
     }
   }
